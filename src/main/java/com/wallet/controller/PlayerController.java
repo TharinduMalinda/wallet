@@ -39,7 +39,7 @@ public class PlayerController {
 
     }
     @PatchMapping(path = "/{playerId}" )
-    public ResponseEntity<PlayerDTO> updateCustomer(@PathVariable Long playerId, @RequestBody Map<Object,Object> objectMap) {
+    public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable Long playerId, @RequestBody Map<Object,Object> objectMap) {
 
         Player player = playerService.updatePlayer(playerId,objectMap);
         return mapper.playerDtoMapper(player);
