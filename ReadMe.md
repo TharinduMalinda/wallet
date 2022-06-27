@@ -78,13 +78,13 @@ java -jar target/wallet-0.0.1-SNAPSHOT.jar --spring.datasource.initialization-mo
 5. At the end of each and every successful transaction, cash balance will update
 6. Each transaction has a unique transaction ID.
 ## Design
-1. Spring ControllerAdvice is used for handle  exception  globally
-2. Spring AOP is used for centralized logging operations
-3. Transfer Object Pattern (DTO) is used to return data from endpoints.
-4. Data Access Object (DAO) pattern is used to isolate the business layer from the persistence layer.
+1. `Spring ControllerAdvice` is used for handle  exception  globally
+2. `Spring AOP` is used for centralized logging operations
+3. Transfer Object Pattern `(DTO)` is used to return data from endpoints.
+4. Data Access Object `(DAO)` pattern is used to isolate the business layer from the persistence layer.
 5. Optimistic Locking with JPA and Hibernate is used to solve the Concurrency issue while updating the player balance.
-6. Endpoints are tested using Swagger UI and Postman also with Junit testing with MockMvc.
-7. used JWT tokens to secure the API
+6. Endpoints are tested using `Swagger UI` and Postman also with `Junit` testing with `MockMvc`.
+7. used `JWT` tokens to secure the API
 8. transaction table doesn't include any mapping to other tables.But there is a account id field, which is validate before insert records
 
 ## Changes needed for the API be production-ready
