@@ -1,7 +1,7 @@
 package com.wallet.configuration;
 
 
-import com.wallet.dto.LoggerMessage;
+import com.wallet.dto.LoggerMessageDTO;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +18,9 @@ public class AspectConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(AspectConfiguration.class);
 
-    @Pointcut(value = "execution(* com.wallet.*.*.*(..) )")
+    //exclude the JwtFilter class since it is final
+    @Pointcut(value = "execution(* com.wallet.*.*.*(..) ) && !within(com.wallet.security.JwtFilter)")
+
     public void mainPointCut(){
 
     }
@@ -33,7 +35,7 @@ public class AspectConfiguration {
             Object outObject = pjp.proceed();
             Long endTime = System.currentTimeMillis();
 
-            LoggerMessage message = new LoggerMessage(className,methodName,argArray,endTime-startTime,outObject);
+            LoggerMessageDTO message = new LoggerMessageDTO(className,methodName,argArray,endTime-startTime,outObject);
             log.info("appLogger : {}", message);
             return outObject;
 

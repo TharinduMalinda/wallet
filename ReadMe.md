@@ -40,12 +40,21 @@ java -jar target/wallet-0.0.1.jar
 http://localhost:8080
 ```
 
-6. To reset the database with resources/data.sql script - delete the data folder and run the JAR file with the below argument
+6.dev profile set as the default profile, which is JWT authorization disable profile.
 
 ```bash
-java -jar target/wallet-0.0.1-SNAPSHOT.jar --spring.datasource.initialization-mode=embedded
+java -jar target/wallet-0.0.1.jar
 ```
+7.Run application with JWT authorization, change profile to `uat`.
 
+```bash
+java -jar -Dspring.profiles.active=uat  target/wallet-0.0.1.jar
+```
+**NOTE**
+
+_if JWT enabled, first need to get jwt token by calling `/player/auth` . 
+place that token inside the header for all other request `key - Authorization`
+and `value - Bearer <token>`_
 ## Endpoints
 1. Create player `  /player - POST`
 2. Update player `  /player/{playerId} - PATCH`

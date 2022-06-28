@@ -1,14 +1,21 @@
 package com.wallet.controller;
 
 
+import com.wallet.dto.AuthRequestDTO;
 import com.wallet.dto.PlayerDTO;
 import com.wallet.dto.ResponseDTO;
 import com.wallet.mapper.Mapper;
 import com.wallet.model.Player;
+import com.wallet.service.Impl.UserDetailsServiceImpl;
 import com.wallet.service.PlayerService;
+import com.wallet.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,16 +26,38 @@ import java.util.Map;
 @RequestMapping("/player")
 
 public class PlayerController {
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    PlayerService playerService;
+    private PlayerService playerService;
 
     @Autowired
-    Mapper mapper;
+    private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private Mapper mapper;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @GetMapping("/{playerId}")
     public ResponseEntity<PlayerDTO> test(@PathVariable Long playerId){
         return mapper.playerDtoMapper(playerService.findPlayer(playerId));
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<?> createAuthToken (@RequestBody @Valid AuthRequestDTO authRequestDTO){
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        authRequestDTO.getUserName(),authRequestDTO.getPassword()
+                )
+        );
+
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequestDTO.getUserName());
+        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+
+        return ResponseEntity.ok(jwt);
     }
 
 

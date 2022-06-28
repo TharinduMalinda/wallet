@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -71,6 +72,12 @@ public class GlobelExceptionHandler {
     public ResponseEntity<ResponseDTO> test(IllegalArgumentException ex){
         log.info("Resolved by GlobelExceptionHandler : ",ex.getMessage());
         return new ResponseEntity<>(new ResponseDTO("error", ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class  )
+    public ResponseEntity<ResponseDTO> test(BadCredentialsException ex){
+        log.info("Resolved by GlobelExceptionHandler : ",ex.getMessage());
+        return new ResponseEntity<>(new ResponseDTO("error", "Incorrect credentials"), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class  )

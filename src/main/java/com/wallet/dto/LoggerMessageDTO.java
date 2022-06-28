@@ -12,7 +12,7 @@ import lombok.SneakyThrows;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class LoggerMessage {
+public class LoggerMessageDTO {
 
     private String className;
     private String methodName;
@@ -26,13 +26,18 @@ public class LoggerMessage {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
+        String out = "";
+        try{
+            out = mapper.writeValueAsString(this.result);
+        }catch (Exception ex){
+            out = this.result.toString();
+        }
         return "LoggerMessage{" +
                 "className='" + className + '\'' +
                 ", methodName='" + methodName + '\'' +
                 ", methodArgs='" + methodArgs + '\'' +
                 ", elapsedTimeInMillis=" + elapsedTimeInMillis +
-                ", result=" + mapper.writeValueAsString(this.result) +
+                ", result=" + out +
                 '}';
     }
 }
