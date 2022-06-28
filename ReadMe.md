@@ -37,7 +37,7 @@ java -jar target/wallet-0.0.1.jar
 5. Swagger UI.
 
 ```bash
-http://localhost:8080
+http://localhost:8080/swagger-ui/index.html#/
 ```
 
 6.dev profile set as the default profile, which is JWT authorization disable profile.
@@ -79,7 +79,7 @@ and `value - Bearer <token>`_
 7. SonarLint
 
 ##Assumptions
-** For completion of the project there are few player related endpoints. Those endpoints should separate from the wallet microservice**
+** For completion of the project there are few `player` related endpoints. Those endpoints should separate from the wallet microservice**
 1. There is only one account(wallet) for each player.
 2. Only active players can perform transactions
 3. Player status will directly effect to account status.Once player status getting update,account status automatically update(because there is one to one mapping)

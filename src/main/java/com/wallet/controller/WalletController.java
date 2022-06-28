@@ -11,6 +11,7 @@ import com.wallet.repository.AccountRepository;
 import com.wallet.repository.TransactionRepository;
 import com.wallet.service.AccountService;
 import com.wallet.service.TransactionService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/transaction")
-
+@Api(tags = "Wallet APIs")
 public class WalletController {
     @Autowired
     AccountService accountService;

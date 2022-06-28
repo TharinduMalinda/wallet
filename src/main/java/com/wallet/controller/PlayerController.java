@@ -9,6 +9,8 @@ import com.wallet.model.Player;
 import com.wallet.service.Impl.UserDetailsServiceImpl;
 import com.wallet.service.PlayerService;
 import com.wallet.util.JwtUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/player")
-
+@Api(tags = "Player APIs")
 public class PlayerController {
     @Autowired
     private AuthenticationManager authenticationManager;
