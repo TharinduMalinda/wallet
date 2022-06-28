@@ -12,11 +12,6 @@ Wallet microservice expose set of rest endpoints that fulfill the requirements d
 - Ability to view list of transactions perform by players(support pagination)
   Current balance per player
 
-Debit /withdraw per player: A debit transaction will only succeed if there are sufficient funds on the account (balance - debit amount >= 0). The caller will supply a transaction number that must be unique for all transactions. If the transaction number is not unique, the operation must fail.
-
-Credit /deposit per player. The caller will supply a transaction number that must be unique for all transactions. If the transaction number is not unique, the operation must fail.
-
-Transaction history per player sorted by creation date and support pagination.
 
 ## Build and Run
 #### Prerequisite
