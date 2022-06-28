@@ -16,7 +16,9 @@ import java.util.Collections;
 @EnableWebMvc
 @EnableSwagger2
 @Configuration
+
 public class SwaggerConfiguration {
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)

@@ -1,10 +1,7 @@
 package com.wallet.service;
 
-import com.wallet.dto.TransactionRequestDTO;
 import com.wallet.model.Account;
-
 import java.math.BigDecimal;
-
 
 public interface AccountService {
 

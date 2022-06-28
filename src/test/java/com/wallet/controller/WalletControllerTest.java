@@ -90,10 +90,6 @@ class WalletControllerTest {
 
     }
 
-    @Test
-    public void testAddCreditAndDebitTransactions(){
-
-    }
 
     @Test
     public void testAddCreditTransaction_CheckBallanceBeforeAndAfter() throws Exception {
@@ -115,10 +111,38 @@ class WalletControllerTest {
 
         createPlayer(10000L,200001L,startBalance);
         doTransaction(200001L,TransactionTypes.DEBIT,txnAmount,expectedBalance);
-        //check accountId
-        //assertEquals(200001L,transactionDTO.getAccountId());
-        //check start and end balance
-       // assertEquals(transactionDTO.getStartBalance().add(transactionDTO.getTxnAmount()),transactionDTO.getEndBalance());
+
+    }
+
+    @Test
+    public void testAddTransaction_WhichExceedMaxTransactionLimit() throws Exception {
+        BigDecimal startBalance = new BigDecimal(10000.00);
+        BigDecimal txnAmount = new BigDecimal(1001.00);
+
+        createPlayer(10000L,200001L,startBalance);
+
+        doTransactionAndCheckIsAllowed(
+                200001L,
+                TransactionTypes.DEBIT,
+                txnAmount,
+                HttpStatus.BAD_REQUEST,
+                "must be less than or equal to 1000.0");
+
+    }
+
+    @Test
+    public void testAddTransaction_WhichLowerThanMinTransactionLimit() throws Exception {
+        BigDecimal startBalance = new BigDecimal(10000.00);
+        BigDecimal txnAmount = new BigDecimal(0.00);
+
+        createPlayer(10000L,200001L,startBalance);
+        doTransactionAndCheckIsAllowed(
+                200001L,
+                TransactionTypes.DEBIT,
+                txnAmount,
+                HttpStatus.BAD_REQUEST,
+                "must be greater than or equal to 0.1");
+
     }
 
     public void checkBalance(Long accountId,BigDecimal expectedBalance) throws Exception {
@@ -164,6 +188,22 @@ class WalletControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.endBalance",Matchers.comparesEqualTo(expectedBalance.doubleValue())));
+
+    }
+
+    public void doTransactionAndCheckIsAllowed(Long accountId,TransactionTypes transactionType,BigDecimal amount,HttpStatus expectedStatus,String expectedMsg) throws Exception {
+
+        TransactionRequestDTO transactionRequestDTO = TransactionRequestDTO.build(
+                "txn0001",accountId,transactionType,amount
+        );
+
+
+        ResultActions response = mockMvc.perform(post("/transaction")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(transactionRequestDTO)))
+                .andDo(print())
+                .andExpect(jsonPath("$.description.txnAmount",is(expectedMsg)));
 
     }
 

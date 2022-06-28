@@ -58,7 +58,7 @@ class PlayerControllerTest  {
     }
 
     @Test
-    public void givenPlayerObject_whenCreatePlayer_thenReturnSavedPlayer() throws Exception{
+    public void testGivenPlayerObject_whenCreatePlayer_thenReturnSavedPlayer() throws Exception{
 
         ResultActions createResponse = createPlayer(100001L,200001L,new BigDecimal(0.00));
         createResponse.andDo(print()).
@@ -80,7 +80,7 @@ class PlayerControllerTest  {
 
     }
     @Test
-    public void updatePlayerObject_whenUpdateStaticField_GetBadRequest() throws Exception{
+    public void testUpdatePlayerObject_whenUpdateStaticField_GetBadRequest() throws Exception{
         createPlayer(100001L,200001L,new BigDecimal(0.00));
         updatePlayer(100001L);
     }

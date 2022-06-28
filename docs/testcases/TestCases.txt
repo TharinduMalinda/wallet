@@ -1,0 +1,15 @@
+~~Player Related Test Cases~~
+
+1.testGivenPlayerObject_whenCreatePlayer_thenReturnSavedPlayer - Developed
+2.testUpdatePlayerObject_whenUpdateStaticField_GetBadRequest - Developed
+3.testGivenPlayerObject_CreatePlayer_thenAccountStatusSameAsPlayerStatus - To be developed
+4.testUpdatePlayerStatus_CheckAccountStatus - To be developed
+
+~~Wallet Related Test Cases~~
+
+1.testAddCreditTransaction_CheckBallanceBeforeAndAfter - Developed
+2.testAddDebitTransaction_CheckBallanceBeforeAndAfter - Developed
+3.testAddTransaction_WhichExceedMaxTransactionLimit - Developed
+4.testAddTransaction_WhichLowerThanMinTransactionLimit - Developed
+5.testAddTransaction_WhenAccountNotInActiveStatus - To be developed
+6.testAddDebitTransaction_WhenBalanceNotSufficient - To be developed

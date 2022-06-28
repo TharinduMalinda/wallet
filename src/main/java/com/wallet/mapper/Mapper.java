@@ -68,7 +68,7 @@ public class Mapper {
     }
 
 
-    public ResponseEntity<PlayerDTO> playerDtoMapper(Player player){
+    public ResponseEntity<PlayerDTO> playerDtoMapper(Player player,HttpStatus expectedStatus){
         PlayerDTO playerDTO = PlayerDTO.build(
                 player.getPlayerId(),
                 player.getFirstName(),
@@ -77,7 +77,8 @@ public class Mapper {
                 player.getPlayerStatus(),
                 player.getAccount().getAccountId()
         );
-        return new ResponseEntity<>(playerDTO, HttpStatus.OK);
+
+        return new ResponseEntity<>(playerDTO, expectedStatus);
     }
 
 

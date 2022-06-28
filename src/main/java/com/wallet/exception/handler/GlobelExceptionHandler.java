@@ -99,8 +99,6 @@ public class GlobelExceptionHandler {
         return new ResponseEntity<>(new ResponseDTO("error", ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
-
-
     @ExceptionHandler(ResourceAlreadyExistException.class  )
     public ResponseEntity<ResponseDTO> test(ResourceAlreadyExistException ex){
         log.info("Resolved by GlobelExceptionHandler : ",ex.getMessage());

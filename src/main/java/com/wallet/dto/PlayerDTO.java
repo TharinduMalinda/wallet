@@ -1,13 +1,9 @@
 package com.wallet.dto;
 
-import com.wallet.model.Account;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wallet.model.ResourceStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
-
-
 import java.time.ZonedDateTime;
 
 @Data
@@ -18,6 +14,7 @@ public class PlayerDTO {
     private Long playerId;
     private String firstName;
     private String lastName;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
     private ZonedDateTime createdDate;
     private ResourceStatus playerStatus;
     private Long accountId;

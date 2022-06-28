@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+//dummy user service for JWT. Should used proper user detail retrieval service
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Override

@@ -5,6 +5,7 @@ import com.wallet.exception.ResourceAlreadyExistException;
 import com.wallet.exception.ResourceNotFoundException;
 import com.wallet.mapper.Mapper;
 import com.wallet.model.Account;
+import com.wallet.model.ResourceStatus;
 import com.wallet.model.Transaction;
 import com.wallet.model.TransactionTypes;
 import com.wallet.repository.AccountRepository;
@@ -52,13 +53,20 @@ public class TransactionServiceImpl implements TransactionService {
             throw  new ResourceAlreadyExistException("Duplicate transaction ID");
         }
         Account account = accountService.findAccountByAccId(transactionRequestDTO.getAccountId());
+        //only accept active player's transactions
+        if(!account.getAccountStatus().equals(ResourceStatus.ACTIVE)){
+            throw new ResourceNotFoundException("Transactione denied. Account is already "+account.getAccountStatus());
+        }
+
         BigDecimal oldBalance = account.getBalance();
+
         //debit transactions
         if(transactionRequestDTO.getTxnType().equals(TransactionTypes.DEBIT)){
             if(accountService.checkBalance(account.getBalance(), transactionRequestDTO.getTxnAmount())){
                 account.setBalance (account.getBalance().subtract(transactionRequestDTO.getTxnAmount()));
             }
         }
+
         //credit transactions
         else{
             account.setBalance (account.getBalance().add(transactionRequestDTO.getTxnAmount()));

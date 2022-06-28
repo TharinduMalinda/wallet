@@ -27,6 +27,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter  {
     @Autowired
     private  JwtFilter jwtRequestFilter;
 
+    //used for enable disable JWT autharization
     @Value("${avoid.jwt}")
     private boolean avoidAuth;
 
@@ -42,9 +43,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter  {
         .and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        http.headers().frameOptions().disable();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
+    //Should use proper passwordEncorder.
     @Bean
     public PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance();

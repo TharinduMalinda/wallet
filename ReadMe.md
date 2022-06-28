@@ -52,8 +52,8 @@ java -jar -Dspring.profiles.active=uat  target/wallet-0.0.1.jar
 ```
 **NOTE**
 
-_if JWT enabled, first need to get jwt token by calling `/player/auth` . 
-place that token inside the header for all other request `key - Authorization`
+_if JWT enabled, first need to get jwt token by calling `/player/auth` `(userName-admin,password-admin)`
+Place that token inside the header for all other request `key - Authorization`
 and `value - Bearer <token>`_
 ## Endpoints
 1. Create player `  /player - POST`
@@ -67,6 +67,10 @@ and `value - Bearer <token>`_
 
 **[Postman project](docs/postman)**
 
+
+**Here you can find the test cases related to all endpoints.**
+
+**[Test Cases](docs/testcases)**
 
 ## Technologies
 

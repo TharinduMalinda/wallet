@@ -1,18 +1,16 @@
 package com.wallet.service.Impl;
 
-import com.wallet.dto.TransactionRequestDTO;
+
 import com.wallet.exception.InsufficientBalanceException;
 import com.wallet.exception.ResourceNotFoundException;
-import com.wallet.mapper.Mapper;
 import com.wallet.model.Account;
-import com.wallet.model.TransactionTypes;
 import com.wallet.repository.AccountRepository;
 import com.wallet.repository.TransactionRepository;
 import com.wallet.service.AccountService;
 import com.wallet.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.math.BigDecimal;
 

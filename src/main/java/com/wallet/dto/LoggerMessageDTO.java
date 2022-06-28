@@ -22,6 +22,7 @@ public class LoggerMessageDTO {
 
     @SneakyThrows
     @Override
+    //toString for logger
     public String toString() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());

@@ -25,6 +25,7 @@ public class AspectConfiguration {
 
     }
 
+    //main log creation
     @Around("mainPointCut()")
     public Object appLogger(ProceedingJoinPoint pjp) throws Throwable {
 

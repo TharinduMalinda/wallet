@@ -1,8 +1,5 @@
 package com.wallet.service.Impl;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wallet.exception.ResourceAlreadyExistException;
 import com.wallet.exception.ResourceNotFoundException;
@@ -17,13 +14,13 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
-
 import java.lang.reflect.Field;
 import java.util.Map;
 
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
+
     @Autowired
     PlayerRepository playerRepository;
 
@@ -34,11 +31,12 @@ public class PlayerServiceImpl implements PlayerService {
     @Autowired
     AccountService accountService;
 
-    private ObjectMapper objectMapper;
 
     @Override
     @Transactional
-    public void createPlayer(Player player) {
+    public Player createPlayer(Player player) {
+        Player pl = new Player();
+
         try{
             findPlayer(player.getPlayerId());
             throw new ResourceAlreadyExistException("Player already exist in the system");
@@ -50,17 +48,16 @@ public class PlayerServiceImpl implements PlayerService {
                 //set the same status as Player
                 player.getAccount().setAccountStatus(player.getPlayerStatus());
                 accountRepository.save(player.getAccount());
-                playerRepository.save(player);
+                pl = playerRepository.save(player);
             }
         }
+        return  player;
     }
 
     @Override
     public Player findPlayer(Long playerId) {
         return playerRepository.findByPlayerId(playerId)
                 .orElseThrow(()-> new ResourceNotFoundException("No such player in the system"));
-
-
 
     }
 
@@ -76,7 +73,6 @@ public class PlayerServiceImpl implements PlayerService {
         });
 
         return playerRepository.save(player);
-
 
     }
 

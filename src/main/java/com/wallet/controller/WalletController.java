@@ -24,10 +24,9 @@ import java.util.List;
 @RequestMapping("/transaction")
 @Api(tags = "Wallet APIs")
 public class WalletController {
+
     @Autowired
     AccountService accountService;
-    @Autowired
-    TransactionRepository transactionRepository;
 
     @Autowired
     TransactionService transactionService;
@@ -35,9 +34,10 @@ public class WalletController {
     @Autowired
     Mapper mapper;
 
+    //ping endpoint for check
     @GetMapping("/hello")
-    public String test(){
-        return "hello";
+    public String ping(){
+        return "hello from server";
     }
 
     @GetMapping("/{accountId}/{pageNumber}/{pageSize}")
@@ -50,18 +50,11 @@ public class WalletController {
         return mapper.acountDtoMapper(accountService.findAccountByAccId(accountId));
     }
 
-    @GetMapping("/deleteall")
-    public ResponseEntity<String> deleet(){
-        transactionRepository.deleteAll();
-        return new ResponseEntity("deleeted",HttpStatus.OK);
-    }
-
     @PostMapping()
     public ResponseEntity<TransactionDTO>  doTransaction(@RequestBody @Valid TransactionRequestDTO transactionRequestDTO){
         Transaction transaction = transactionService.createTransaction(transactionRequestDTO);
-
         return mapper.transactionDtoMapper(transaction);
-        //return transactionRequest;
+
     }
 
 
