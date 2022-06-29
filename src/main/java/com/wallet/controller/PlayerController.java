@@ -17,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -62,6 +63,7 @@ public class PlayerController {
 
     @PostMapping("/auth")
     public ResponseEntity<?> createAuthToken (@RequestBody @Valid AuthRequestDTO authRequestDTO){
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authRequestDTO.getUserName(),authRequestDTO.getPassword()
@@ -72,6 +74,13 @@ public class PlayerController {
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
         return ResponseEntity.ok(jwt);
+    }
+
+    @RequestMapping("/error")
+    public void handleError(HttpServletRequest request) throws Throwable {
+        if (request.getAttribute("javax.servlet.error.exception") != null) {
+            throw (Throwable) request.getAttribute("javax.servlet.error.exception");
+        }
     }
 
 

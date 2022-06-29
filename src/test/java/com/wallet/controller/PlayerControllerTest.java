@@ -82,7 +82,8 @@ class PlayerControllerTest  {
     @Test
     public void testUpdatePlayerObject_whenUpdateStaticField_GetBadRequest() throws Exception{
         createPlayer(100001L,200001L,new BigDecimal(0.00));
-        updatePlayer(100001L);
+        updatePlayer(100001L);// update name
+
     }
 
 
@@ -136,7 +137,7 @@ class PlayerControllerTest  {
                 .content(objectMapper.writeValueAsString(player)));
 
         response.andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName", is("Tharindu_updated")))
                 .andExpect(jsonPath("$.lastName", is("Malinda_updated")))
         ;

@@ -1,0 +1,42 @@
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!--    get active profile-->
+    <springProperty scope="context" name="profile" source="spring.profiles.active"/>
+    <!--    get properties from active profile-->
+    <property resource="application-${profile}.properties" />
+    <property name="LOG_PATTERN" value="${logback.log.pattern}"/>
+    <property name="APP_LOG_ROOT" value="${logback.app.log.root}"/>
+    <property name="MAX_FILE_SIZE" value="${logback.max.file.size}"/>
+    <property name="MAX_FILE_HISTORY" value="${logback.max.file.history}"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="infoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APP_LOG_ROOT}/info.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${APP_LOG_ROOT}/info.%d{yyyy-MM-dd_HH}-%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <root level="info">
+        <appender-ref ref="infoLog"/>
+        <appender-ref ref="console"/>
+    </root>
+</configuration>

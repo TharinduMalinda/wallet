@@ -1,11 +1,9 @@
 package com.wallet.exception.handler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.wallet.exception.InsufficientBalanceException;
-import com.wallet.exception.ResourceAlreadyExistException;
-import com.wallet.exception.ResourceNotFoundException;
+import com.wallet.exception.*;
 import com.wallet.dto.ResponseDTO;
-import com.wallet.exception.StaticFieldUpdateException;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -66,6 +64,12 @@ public class GlobelExceptionHandler {
             }
         log.info("Resolved by GlobelExceptionHandler : ",ex.getMessage());
         return new ResponseEntity<>(new ResponseDTO("error",message),  HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(JWTTokenExpireException.class  )
+    public ResponseEntity<ResponseDTO> test(JWTTokenExpireException ex){
+        log.info("Resolved by GlobelExceptionHandler : ",ex.getMessage());
+        return new ResponseEntity<>(new ResponseDTO("error", ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(IllegalArgumentException.class  )

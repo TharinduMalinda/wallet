@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-//this class use to creat,validate jwt tokens.We can also use dynamic secret key more security.
+//this class use to creat,validate jwt tokens.We can also use dynamic secret key
 @Service
 public class JwtUtil {
 

@@ -1,9 +1,14 @@
 package com.wallet.security;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wallet.dto.ResponseDTO;
 import com.wallet.service.Impl.UserDetailsServiceImpl;
 import com.wallet.util.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,30 +35,45 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     //JWT token validation
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        try {
+            String authorizationHeader = httpServletRequest.getHeader("Authorization");
 
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+            String token = null;
+            String userName = null;
 
-        String token = null;
-        String userName = null;
-
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            token = authorizationHeader.substring(7);
-            userName = jwtUtil.extractUsername(token);
-        }
-
-        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            UserDetails userDetails = service.loadUserByUsername(userName);
-
-            if (jwtUtil.validateToken(token, userDetails)) {
-
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                token = authorizationHeader.substring(7);
+                userName = jwtUtil.extractUsername(token);
             }
+
+            if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+                UserDetails userDetails = service.loadUserByUsername(userName);
+
+                if (jwtUtil.validateToken(token, userDetails)) {
+
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    usernamePasswordAuthenticationToken
+                            .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                }
+            }
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+        }catch (JwtException e) {
+
+
+            httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+            httpServletResponse.getWriter().write(convertObjectToJson(new ResponseDTO("error",e.getMessage())));
         }
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
+
+    private String convertObjectToJson(Object object) throws JsonProcessingException {
+        if (object == null) {
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(object);
+    }
+
 }
