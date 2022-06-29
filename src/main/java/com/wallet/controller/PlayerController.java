@@ -49,16 +49,13 @@ public class PlayerController {
 
     @PostMapping
     public ResponseEntity<PlayerDTO> createPlayer(@RequestBody @Valid Player player)  {
-
         return mapper.playerDtoMapper( playerService.createPlayer(player),HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{playerId}" )
     public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable Long playerId, @RequestBody Map<Object,Object> objectMap) {
-
         Player player = playerService.updatePlayer(playerId,objectMap);
         return mapper.playerDtoMapper(player,HttpStatus.CREATED);
-
     }
 
     @PostMapping("/auth")
@@ -74,13 +71,6 @@ public class PlayerController {
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
         return ResponseEntity.ok(jwt);
-    }
-
-    @RequestMapping("/error")
-    public void handleError(HttpServletRequest request) throws Throwable {
-        if (request.getAttribute("javax.servlet.error.exception") != null) {
-            throw (Throwable) request.getAttribute("javax.servlet.error.exception");
-        }
     }
 
 
