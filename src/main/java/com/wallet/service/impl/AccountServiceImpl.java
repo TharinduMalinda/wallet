@@ -1,5 +1,4 @@
-package com.wallet.service.Impl;
-
+package com.wallet.service.impl;
 
 import com.wallet.exception.InsufficientBalanceException;
 import com.wallet.exception.ResourceNotFoundException;
@@ -10,9 +9,14 @@ import com.wallet.service.AccountService;
 import com.wallet.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import java.math.BigDecimal;
+
+/**
+ * account related services and logics.
+ *
+ * @author Malinda
+ *
+ */
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -29,7 +33,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findAccountByPlayerId(Long playerId){
         return playerService.findPlayer(playerId).getAccount();
-
     }
 
     @Override
@@ -46,6 +49,4 @@ public class AccountServiceImpl implements AccountService {
             throw new InsufficientBalanceException("Your account balance is not sufficient to perform the transaction");
         }
     }
-
-
 }

@@ -1,12 +1,11 @@
 package com.wallet.security;
 
-import com.wallet.service.Impl.UserDetailsServiceImpl;
+import com.wallet.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,7 +15,12 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.ArrayList;
+/**
+ * This class is used to check url pattern and apply jwt authorization.
+ *
+ * @author Malinda
+ *
+ */
 
 @EnableWebSecurity
 @Configuration
@@ -27,7 +31,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter  {
     @Autowired
     private  JwtFilter jwtRequestFilter;
 
-    //used for enable disable JWT autharization
+    //used for enable disable JWT authorization
     @Value("${avoid.jwt}")
     private boolean avoidAuth;
 
@@ -60,12 +64,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter  {
         return super.authenticationManagerBean();
     }
 
-
     private String getPath(){
        if(avoidAuth){
            return "/**";
        }
        return "/player/auth";
     }
-
 }

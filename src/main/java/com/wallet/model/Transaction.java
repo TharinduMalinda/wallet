@@ -1,6 +1,5 @@
 package com.wallet.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,17 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
+/**
+ * Entity class for transaction.
+ *
+ * @author Malinda
+ *
+ */
+
 @Data
 @AllArgsConstructor(staticName = "build")
 @NoArgsConstructor
 @Entity
-
 public class Transaction  {
     @Id
     private String txnId;
@@ -35,15 +40,4 @@ public class Transaction  {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private ZonedDateTime txnDateTime;
-
-//    // Added the below to prevent JPA update the same Txn id
-//    @Override
-//    public String getId() {
-//        return txnId;
-//    }
-//
-//    @Override
-//    public boolean isNew() {
-//        return true;
-//    }
 }

@@ -1,24 +1,25 @@
 package com.wallet.controller;
 
-
 import com.wallet.dto.AccountDTO;
-import com.wallet.dto.ResponseDTO;
 import com.wallet.dto.TransactionDTO;
 import com.wallet.dto.TransactionRequestDTO;
 import com.wallet.mapper.Mapper;
 import com.wallet.model.Transaction;
-import com.wallet.repository.AccountRepository;
-import com.wallet.repository.TransactionRepository;
 import com.wallet.service.AccountService;
 import com.wallet.service.TransactionService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
+
+/**
+ * Wallet related endpints are access this controller.
+ *
+ * @author Malinda
+ *
+ */
 
 @RestController
 @RequestMapping("/transaction")
@@ -34,7 +35,7 @@ public class WalletController {
     @Autowired
     Mapper mapper;
 
-    //ping endpoint for check
+    //ping endpoint for check server
     @GetMapping("/hello")
     public String ping(){
         return "hello from server";
@@ -56,6 +57,4 @@ public class WalletController {
         return mapper.transactionDtoMapper(transaction);
 
     }
-
-
 }

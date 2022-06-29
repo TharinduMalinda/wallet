@@ -1,4 +1,4 @@
-package com.wallet.service.Impl;
+package com.wallet.service.impl;
 
 import com.wallet.dto.TransactionRequestDTO;
 import com.wallet.exception.ResourceAlreadyExistException;
@@ -18,9 +18,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
 import java.util.List;
+
+/**
+ * transaction related services and logics.
+ *
+ * @author Malinda
+ *
+ */
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -72,8 +78,7 @@ public class TransactionServiceImpl implements TransactionService {
             account.setBalance (account.getBalance().add(transactionRequestDTO.getTxnAmount()));
         }
         accountRepository.save(account);
-        Transaction transaction = transactionRepository.save(mapper.txnMapper(transactionRequestDTO,account.getBalance(),oldBalance));
+        return transactionRepository.save(mapper.txnMapper(transactionRequestDTO,account.getBalance(),oldBalance));
 
-        return transaction;
     }
 }

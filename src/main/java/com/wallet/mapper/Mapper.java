@@ -13,14 +13,15 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+/**
+ * This mapper is used to convert DTO objects to entity objects and vice versa.
+ *
+ * @author Malinda
+ *
+ */
 
 @Component
 public class Mapper {
-
-//    public Player playerMapper(PlayerDTO playerDTO){
-//        Player player = Player.build(playerDTO.getPlayerId(), playerDTO.getFirstName(), playerDTO.getLastName(), ZonedDateTime.now(),playerDTO.getStatus(), playerDTO.getAccount());
-//        return player;
-//    }
 
     public Transaction txnMapper(TransactionRequestDTO txnRequest, BigDecimal newBalance, BigDecimal oldBalance){
         return Transaction.build(
@@ -68,8 +69,8 @@ public class Mapper {
     }
 
 
-    public ResponseEntity<PlayerDTO> playerDtoMapper(Player player,HttpStatus expectedStatus){
-        PlayerDTO playerDTO = PlayerDTO.build(
+    public ResponseEntity<PlayerResponseDTO> playerDtoMapper(Player player, HttpStatus expectedStatus){
+        PlayerResponseDTO playerResponseDTO = PlayerResponseDTO.build(
                 player.getPlayerId(),
                 player.getFirstName(),
                 player.getLastName(),
@@ -78,9 +79,17 @@ public class Mapper {
                 player.getAccount().getAccountId()
         );
 
-        return new ResponseEntity<>(playerDTO, expectedStatus);
+        return new ResponseEntity<>(playerResponseDTO, expectedStatus);
     }
 
-
-
+    public Player playerRequestDtoMapper(PlayerRequestDTO playerRequestDTO){
+        return Player.build(
+                playerRequestDTO.getPlayerId(),
+                playerRequestDTO.getFirstName(),
+                playerRequestDTO.getLastName(),
+                playerRequestDTO.getCreatedDate(),
+                playerRequestDTO.getPlayerStatus(),
+                playerRequestDTO.getAccount()
+        );
+    }
 }

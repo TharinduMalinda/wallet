@@ -7,6 +7,5 @@ import java.util.List;
 public interface TransactionService {
 
     List<Transaction> getTransactionList(Long accountId,int pageNo,int pageSize);
-
     Transaction createTransaction(TransactionRequestDTO transactionRequestDTO);
 }

@@ -1,9 +1,10 @@
-package com.wallet.service.Impl;
+package com.wallet.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wallet.dto.PlayerRequestDTO;
 import com.wallet.exception.ResourceAlreadyExistException;
 import com.wallet.exception.ResourceNotFoundException;
 import com.wallet.exception.StaticFieldUpdateException;
+import com.wallet.mapper.Mapper;
 import com.wallet.model.Player;
 import com.wallet.repository.AccountRepository;
 import com.wallet.repository.PlayerRepository;
@@ -17,25 +18,35 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+/**
+ * player related services and logics.
+ *
+ * @author Malinda
+ *
+ */
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
-    PlayerRepository playerRepository;
+    private PlayerRepository playerRepository;
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Lazy
     @Autowired
-    AccountService accountService;
+    private AccountService accountService;
 
+    @Autowired
+    private Mapper mapper;
 
+    //create a new player,account instances, if there is no such player,account
     @Override
     @Transactional
-    public Player createPlayer(Player player) {
-        Player pl = new Player();
+    public Player createPlayer(PlayerRequestDTO playerRequestDTO) {
+        Player player = mapper.playerRequestDtoMapper(playerRequestDTO);
+        Player pl;
 
         try{
             findPlayer(player.getPlayerId());
@@ -51,7 +62,7 @@ public class PlayerServiceImpl implements PlayerService {
                 pl = playerRepository.save(player);
             }
         }
-        return  player;
+        return  pl;
     }
 
     @Override
@@ -61,6 +72,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     }
 
+    // update player details. can not update playerId
     public Player updatePlayer(Long playerId, Map<Object,Object> objectMap){
         Player player = findPlayer(playerId);
         objectMap.forEach((key,value) -> {
@@ -73,10 +85,5 @@ public class PlayerServiceImpl implements PlayerService {
         });
 
         return playerRepository.save(player);
-
     }
-
-
-
-
 }

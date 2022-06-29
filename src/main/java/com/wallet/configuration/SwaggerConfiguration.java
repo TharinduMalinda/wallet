@@ -13,10 +13,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 
+/**
+ * Swagger configuration class.Added some API meta data into front page of swagger UI.
+ *
+ * @author Malinda
+ *
+ */
+
 @EnableWebMvc
 @EnableSwagger2
 @Configuration
-
 public class SwaggerConfiguration {
 
     @Bean

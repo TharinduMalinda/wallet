@@ -8,10 +8,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
+/**
+ * This DTO is used as a store log details of a method.
+ *
+ * @author Malinda
+ *
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class LoggerMessageDTO {
 
     private String className;
@@ -27,7 +33,7 @@ public class LoggerMessageDTO {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        String out = "";
+        String out ;
         try{
             out = mapper.writeValueAsString(this.result);
         }catch (Exception ex){

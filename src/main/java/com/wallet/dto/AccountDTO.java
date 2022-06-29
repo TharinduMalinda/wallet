@@ -7,6 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
+/**
+ * This DTO is used for transferring account details as response.
+ *
+ * @author Malinda
+ *
+ */
+
 @Data
 @AllArgsConstructor(staticName = "build")
 @NoArgsConstructor

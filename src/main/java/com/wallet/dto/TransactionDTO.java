@@ -1,21 +1,24 @@
 package com.wallet.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.wallet.model.Transaction;
 import com.wallet.model.TransactionTypes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Id;
-import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.List;
+
+/**
+ * This DTO is used to transferring transaction destails as a response.
+ *
+ * @author Malinda
+ *
+ */
 
 @Data
 @AllArgsConstructor(staticName = "build")
-
+@NoArgsConstructor
 public class TransactionDTO {
 
     private String txnId;

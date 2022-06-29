@@ -10,19 +10,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * Aspect configuration class.This class generate the log message and log it.
+ *
+ * @author Malinda
+ *
+ */
 
 @Aspect
 @Component
-
 public class AspectConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(AspectConfiguration.class);
 
     //exclude the JwtFilter class since it is final
     @Pointcut(value = "execution(* com.wallet.*.*.*(..) ) && !within(com.wallet.security.JwtFilter)")
-
     public void mainPointCut(){
-
+        //Since this is mainPointCut, no need of implementing
     }
 
     //main log creation

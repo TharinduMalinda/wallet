@@ -6,23 +6,30 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
+/**
+ * Entity class for account.
+ *
+ * @author Malinda
+ *
+ */
+
 @Data
 @AllArgsConstructor(staticName = "build")
 @NoArgsConstructor
-
 @Entity
 @Table(name = "account")
 @DynamicInsert
 @DynamicUpdate
-
 public class Account {
     @Id
     @Digits(integer = 15, fraction = 0, message = "Invalid account Id")
@@ -32,7 +39,7 @@ public class Account {
     @NotNull
     private ResourceStatus accountStatus;
 
-    @Digits(integer=15, fraction=4 ,message = "Invalid balanace")
+    @Digits(integer = 15,fraction = 4 ,message = "Invalid balanace")
     private BigDecimal balance;
 
     @NotBlank

@@ -16,11 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.*;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -29,7 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-
 class PlayerControllerTest  {
 
     @Autowired
@@ -51,35 +48,20 @@ class PlayerControllerTest  {
     }
 
     @Test
-    public void testGivenPlayerObject_whenCreatePlayer_thenReturnSavedPlayer() throws Exception{
+     void testGivenPlayerObject_whenCreatePlayer_thenReturnSavedPlayer() throws Exception{
 
         ResultActions createResponse = createPlayer(100001L,200001L,new BigDecimal(0.00));
         createResponse.andDo(print()).
-                andExpect(status().isCreated());
-                /*.andExpect(jsonPath("$.playerID",
-                        is(player.getPlayerId())))
-                .andExpect(jsonPath("$.firstName",
-                        is(player.getFirstName())))
-                .andExpect(jsonPath("$.lastName",
-                        is(player.getLastName())))*/
-
-        ResultActions getResponse = getPlayer(100001L);
-
-        getResponse.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.playerId",is(100001)));
-
-
-
+                andExpect(status().isCreated())
+                .andExpect(jsonPath("$.playerId", is(100001)));
     }
+
     @Test
-    public void testUpdatePlayerObject_whenUpdateStaticField_GetBadRequest() throws Exception{
+     void testUpdatePlayerObject_whenUpdateStaticField_GetBadRequest() throws Exception{
         createPlayer(100001L,200001L,new BigDecimal(0.00));
         updatePlayer(100001L);// update name
 
     }
-
-
 
     public ResultActions createPlayer(Long playerID,Long accounId,BigDecimal balance) throws Exception {
         Account account = Account.build(
@@ -106,7 +88,6 @@ class PlayerControllerTest  {
         return  response;
     }
 
-
     public ResultActions getPlayer(Long playerId) throws Exception {
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders
                                     .get("/player/{playerId}",playerId)
@@ -132,9 +113,6 @@ class PlayerControllerTest  {
         response.andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName", is("Tharindu_updated")))
-                .andExpect(jsonPath("$.lastName", is("Malinda_updated")))
-        ;
+                .andExpect(jsonPath("$.lastName", is("Malinda_updated")));
     }
-
-
 }
