@@ -8,7 +8,7 @@ public class  WalletApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WalletApplication.class, args);
-		System.out.println("test dev branch");
+		System.out.println("test dev branch edited");
 	}
 
 }
